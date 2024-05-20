@@ -21,7 +21,7 @@ if(isset($_GET['student_id']) && !empty($_GET['student_id'])) {
         $username = $row["name"];
         $salary = $row["salary"];
         $technology = $row["technology"];
-        $password = $row["password"];
+       
 
     } else {
         echo "No user found with the provided ID.";
