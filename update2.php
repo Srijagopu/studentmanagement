@@ -13,14 +13,14 @@ if(isset($_GET['student_id']) && !empty($_GET['student_id'])) {
     $encoded_id=$_GET['student_id'];
     $userid =base64_decode($encoded_id);
 
-    $sql = "SELECT * FROM user WHERE id = $userid";
+    $sql = "SELECT * FROM teacher WHERE id = $userid";
     $result = $data->query($sql);
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $username = $row["username"];
-        $email = $row["email"];
-        $phone = $row["phone"];
+        $username = $row["name"];
+        $salary = $row["salary"];
+        $technology = $row["technology"];
         $password = $row["password"];
 
     } else {
