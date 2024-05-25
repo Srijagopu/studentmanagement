@@ -19,7 +19,10 @@ session_start();
 		 die("Connection failed: " . $data->connect_error);
 	 }
 
-	 $sql="SELECT * from user";
+	 $sql="SELECT user.username, user.password, user.email, user.phone, classes.class, sections.section
+	 FROM user
+	 JOIN classes ON user.class = classes.id
+	 JOIN sections ON user.section= sections.id";
 	 $result=mysqli_query($data,$sql);
 
 
@@ -52,10 +55,11 @@ include 'admin_css.php'
 		<table border="1px">
 			<tr>
 				<th style="padding:20px; font-size:15px	;">Name</th>
+				<th style="padding:20px; font-size:15px	;">Password</th>
 				<th style="padding:20px; font-size:15px	;">Email</th>	
 				<th style="padding:20px; font-size:15px	;">Phone</th>	
-				<th style="padding:20px; font-size:15px	;">Technology</th>
-				<th style="padding:20px; font-size:15px	;">Password</th>
+				<th style="padding:20px; font-size:15px	;">Class</th>
+				<th style="padding:20px; font-size:15px	;">Section</th>
                 <th style="padding:20px; font-size:15px	;">Delete</th>
 				<th style="padding:20px; font-size:15px	;">Update</th>
 	
@@ -72,6 +76,9 @@ include 'admin_css.php'
 					<?php echo"{$info['username']}";?>
 				</td>
 
+				<td style="padding:20px;">
+					<?php echo"{$info['password']}";?></td>
+
 					<td style="padding:20px;">
 					<?php echo"{$info['email']}";?></td>
 
@@ -79,20 +86,22 @@ include 'admin_css.php'
 					<?php echo"{$info['phone']}";?></td>
 
 					<td style="padding:20px;">
-					<?php echo"{$info['technology']}";?></td>
+					<?php echo"{$info['class']}";?></td>
 					
 					<td style="padding:20px;">
-					<?php echo"{$info['password']}";?></td>
+					<?php echo"{$info['section']}";?></td>
+					
+					
 
                     <td style="padding:20px;">
                     <?php
-echo "<a onClick=\"return confirm('Are you sure you want to delete?');\" href='delete1.php?student_id={$info['id']}'>Delete</a>";
+echo "<a onClick=\"return confirm('Are you sure you want to delete?');\" href='delete1.php?student_id={$info['username']}'>Delete</a>";
 ?>
 
                     </td>
 					<td style="padding:20px;">
                     <?php
-echo "<a onClick=\"return confirm('Are you sure you want to update?');\" href='update.php?student_id={$info['id']}'>Update</a>";
+echo "<a onClick=\"return confirm('Are you sure you want to update?');\" href='update.php?student_id={$info['username']}'>Update</a>";
 ?>
 
                     </td>

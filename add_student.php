@@ -19,8 +19,9 @@ session_start();
         $username=$_POST['name'];
         $user_email=$_POST['email'];
         $user_phone=$_POST['phone'];
-        $user_technology=$_POST['technology'];
         $user_password=$_POST['password'];
+        $user_class=$_POST['class'];
+        $user_section=$_POST['section'];
         $usertype="student";
 
         $check="SELECT * FROM user WHERE username='$username'";
@@ -37,9 +38,8 @@ session_start();
 
         
 
-        $sql="INSERT INTO user(
-            username,email,phone,technology,usertype,password) VALUES('$username',' $user_email', '$user_phone','$user_technology',
-           '$usertype', '$user_password')";
+        $sql="INSERT INTO user(username,password,email,phone,usertype,class,section) VALUES('$username','$user_password',' $user_email', '$user_phone',
+            '$usertype','$user_class','$user_section' )";
         $result=mysqli_query($data,$sql);
         if($result)
         {
@@ -92,6 +92,12 @@ include 'admin_slidebar.php';
                 <label>Username</label>
                 <input type="text" name="name">
             </div>
+
+            <div>
+                <label>password</label>
+                <input type="text" name="password">
+            </div>
+
             <div>
             <label>email</label>
                 <input type="text" name="email">
@@ -100,14 +106,14 @@ include 'admin_slidebar.php';
                 <label>phone</label>
                 <input type="text" name="phone">
             </div>
+
             <div>
-                <label>technology</label>
-                <input type="text" name="technology">
+                <label>Class</label>
+                <select type="text" name="class" id=class><option>select class</option></select>
+                <label>Section</label>
+                <select type="text" name="section" id="section"><option>select sec</option></select>
             </div>
-            <div>
-                <label>password</label>
-                <input type="text" name="password">
-            </div>
+
             <div>
                 <input type="Submit" class="btn btn-primary"name="add_student" value="Add Student">
             </div>
@@ -119,6 +125,44 @@ include 'admin_slidebar.php';
         </form>
 
 	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#class').change(function(){
+                    loadSection($(this).find(':selected').val())
+                })
+              
+        });
+
+        function loadClass(){
+            $.ajax({
+                type:"POST",
+                url:"ajax.php",
+                data:"get=class"
+            }).done(function(result){
+                $(result).each(function(){
+                    $('#class').append($(result));
+
+                })
+            });
+        }
+
+        function loadSection(classId){
+            $("#section").children().remove()
+            $.ajax({
+                type:"POST",
+                url:"ajax.php",
+                data:"get=section&classId="+classId
+            }).done(function(result){
+                $("#section").append($(result));
+            });
+
+    
+            
+        }
+
+        loadClass();
+        </script>
 
 </body>
 </html>
