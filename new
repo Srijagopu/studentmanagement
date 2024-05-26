@@ -1,0 +1,11 @@
+$sql = "UPDATE user SET username='$newUsername', email='$newemail', phone='$newphone',technology='$newtechnology', password='$newpassword' WHERE id=$userid";
+
+if ($data->query($sql) === TRUE) {
+    echo "<script>alert('Updated Successfully');</script>";
+} else {
+    echo "Error updating record: " . $data->error;
+}
+}
+
+$data->close();
+?>

@@ -19,7 +19,10 @@ session_start();
 		 die("Connection failed: " . $data->connect_error);
 	 }
 
-	 $sql="SELECT * from teacher";
+	 $sql="SELECT teacher.name, teacher.salary, classes.class, sections.section
+	 FROM teacher
+	 JOIN classes ON teacher.class = classes.id
+	 JOIN sections ON teacher.section= sections.id";
 	 $result=mysqli_query($data,$sql);
 
 
@@ -52,7 +55,8 @@ include 'admin_css.php'
 		<table border="1px">
 			<tr>
 				<th style="padding:20px; font-size:15px	;">Name</th>
-				<th style="padding:20px; font-size:15px	;">technology</th>	
+				<th style="padding:20px; font-size:15px	;">Class</th>	
+				<th style="padding:20px; font-size:15px	;">Section</th>	
 				<th style="padding:20px; font-size:15px	;">Salary</th>	
                 <th style="padding:20px; font-size:15px	;">Delete</th>
 				<th style="padding:20px; font-size:15px	;">Update</th>
@@ -71,29 +75,28 @@ include 'admin_css.php'
 				</td>
 
 					<td style="padding:20px;">
-					<?php echo"{$info['technology']}";?></td>
+					<?php echo"{$info['class']}";?></td>
+
+					
+					<td style="padding:20px;">
+					<?php echo"{$info['section']}";?></td>
+
 
 					<td style="padding:20px;">
 					<?php echo"{$info['salary']}";?></td>
 					
-                    <td style="padding:20px;">
-					<?php
-$student_id = $info['id'];
-$encoded_id = base64_encode($student_id);
-
-echo "<a onClick=\"return confirm('Are you sure you want to delete?');\" href='delete2.php?student_id={$encoded_id}'>Delete</a>";
+					<td style="padding:20px;">
+                    <?php
+echo "<a onClick=\"return confirm('Are you sure you want to delete?');\" href='delete2.php?student_id={$info['name']}'>Delete</a>";
 ?>
 
                     </td>
 					<td style="padding:20px;">
-					<?php
-					
-$student_id = $info['id'];
-$encoded_id = base64_encode($student_id);
-
-echo "<a onClick=\"return confirm('Are you sure you want to update?');\" href='update2.php?student_id={$encoded_id}'>Update</a>";
+                    <?php
+echo "<a onClick=\"return confirm('Are you sure you want to update?');\" href='update2.php?student_id={$info['name']}'>Update</a>";
 ?>
 
+                    </td>
 
                     </td>
 

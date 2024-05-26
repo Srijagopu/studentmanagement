@@ -138,7 +138,7 @@ include 'admin_slidebar.php';
             $.ajax({
                 type:"POST",
                 url:"ajax.php",
-                data:"get=class"
+                data:'get=class'
             }).done(function(result){
                 $(result).each(function(){
                     $('#class').append($(result));
@@ -152,7 +152,7 @@ include 'admin_slidebar.php';
             $.ajax({
                 type:"POST",
                 url:"ajax.php",
-                data:"get=section&classId="+classId
+                data:{get:'section',classId : classId}
             }).done(function(result){
                 $("#section").append($(result));
             });

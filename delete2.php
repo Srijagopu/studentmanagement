@@ -19,10 +19,10 @@ if (isset($_GET['student_id']) && !empty($_GET['student_id'])) {
     $user_id = base64_decode($encoded_id);
 
     // Ensure the decoded ID is a valid integer
-    if (is_numeric($user_id)) {
+    if (is_string($user_id)) {
         // Prepare the SQL statement to prevent SQL injection
-        $stmt = $data->prepare("DELETE FROM teacher WHERE id = ?");
-        $stmt->bind_param("i", $user_id);
+        $stmt = $data->prepare("DELETE FROM teacher WHERE name = ?");
+        $stmt->bind_param("s", $user_id);
 
         // Execute the statement and check if it was successful
         if ($stmt->execute()) {
@@ -41,8 +41,6 @@ if (isset($_GET['student_id']) && !empty($_GET['student_id'])) {
 } else {
     echo "User ID not provided.";
 }
-
-// Close the database connection
 $data->close();
 ?>
 
