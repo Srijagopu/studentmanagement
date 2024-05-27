@@ -17,12 +17,13 @@ session_start();
     $data = mysqli_connect($host, $user, $password, $db);
     if(isset($_POST['add_teacher'])){
         $username=$_POST['name'];
+        $user_password=$_POST['password'];
         $user_class=$_POST['class'];
         $user_section=$_POST['section'];
         $user_salary=$_POST['salary'];
         $usertype="teacher";
 
-        $check="SELECT * FROM teacher WHERE name='$username'";
+        $check="SELECT * FROM teacher WHERE username='$username'";
         $check_user=mysqli_query($data,$check);
         $row_count=mysqli_num_rows($check_user);
         if ($row_count==1)
@@ -37,7 +38,7 @@ session_start();
         
 
         $sql="INSERT INTO teacher(
-            name,class,section,salary) VALUES('$username',' $user_class',' $user_class', '$user_salary'
+            username,password,class,section,salary,usertype) VALUES('$username','$user_password',' $user_class',' $user_class', '$user_salary','$usertype'
         )";
         $result=mysqli_query($data,$sql);
         if($result)
@@ -90,6 +91,10 @@ include 'admin_slidebar.php';
             <div>
                 <label>Teacher Name</label>
                 <input type="text" name="name">
+            </div>
+            <div>
+                <label>Password</label>
+                <input type="text" name="password">
             </div>
             <div>
                 <label>Class</label>

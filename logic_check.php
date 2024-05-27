@@ -45,15 +45,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 header("Location: teacherhome.php");
                 exit();
-        } else {
-            $message= "Username or password do not match";
-    
-            $_SESSION['loginMessage']=$message;
-            header("location:login.php");
+            }
         }
-    } else {
-        echo "Query execution error: " . mysqli_error($data);
     }
-}
+        } 
+
+        $sql_teacher = "SELECT * FROM teacher WHERE username='$name' AND password='$pass'";
+        $result_teacher = mysqli_query($data, $sql_teacher);
+        if ($result_teacher) {
+            $row_teacher = mysqli_fetch_assoc($result_teacher);
+            if ($row_teacher){
+                
+                if ($row_teacher["usertype"] == "teacher") {
+
+                    $_SESSION['username']=$name;
+    
+                    $_SESSION['usertype']="teacher";
+    
+                    header("Location: student_teacherhome.php");
+                    exit();
+
+            }
+        }
+    
+    
+
+    
+    $message= "Username or password do not match";
+    
+    $_SESSION['loginMessage']=$message;
+    header("location:login.php");
+    exit();
+        
+   
 }
 ?>

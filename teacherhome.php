@@ -31,7 +31,7 @@ session_start();
 
 	<header class="header">
 		
-		<a href="">Student Dashboard</a>
+		<a href="">Teacher Dashboard</a>
 
 		<div class="logout">
 			

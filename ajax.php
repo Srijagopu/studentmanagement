@@ -22,7 +22,7 @@ switch($command){
         break;
 
         case "section":
-            $result1="<option>Select State</option>";
+            $result1="<option>Select Section</option>";
             $statement="SELECT id,section FROM sections WHERE class_id=" . $classId;
             $dt=mysqli_query($conn,$statement);
             while ($result=mysqli_fetch_array($dt)){

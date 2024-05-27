@@ -48,7 +48,7 @@
 			</li>
 
 			<li>
-				<a href="view_section.php">View Section</a>
+				<a href="view_timetable.php">View Timetable</a>
 			</li>
 			
 			

@@ -15,13 +15,13 @@ if ($data->connect_error) {
 // Check if student_id is provided in the GET request
 if (isset($_GET['student_id']) && !empty($_GET['student_id'])) {
     // Decode the base64 encoded student_id
-    $encoded_id = $_GET['student_id'];
-    $user_id = base64_decode($encoded_id);
+    $user_id = $_GET['student_id'];
+
 
     // Ensure the decoded ID is a valid integer
     if (is_string($user_id)) {
         // Prepare the SQL statement to prevent SQL injection
-        $stmt = $data->prepare("DELETE FROM teacher WHERE name = ?");
+        $stmt = $data->prepare("DELETE FROM teacher WHERE username = ?");
         $stmt->bind_param("s", $user_id);
 
         // Execute the statement and check if it was successful

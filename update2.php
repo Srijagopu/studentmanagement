@@ -21,7 +21,7 @@ if ($data->connect_error) {
 if (isset($_GET['student_id']) && !empty($_GET['student_id'])) {
     $username = $_GET['student_id'];
 
-    $sql = "SELECT * FROM teacher WHERE name = ?";
+    $sql = "SELECT * FROM teacher WHERE username = ?";
     $stmt = $data->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -29,7 +29,7 @@ if (isset($_GET['student_id']) && !empty($_GET['student_id'])) {
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $username = $row["name"];
+        $username = $row["username"];
         $class = $row["class"];
         $section = $row["section"];
         $salary = $row["salary"];
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $newSection = $_POST['section'];
     $newSalary = $_POST['salary'];
 
-    $sql = "UPDATE teacher SET name=?, class=?, section=?,salary=? WHERE name=?";
+    $sql = "UPDATE teacher SET username=?, class=?, section=?,salary=? WHERE username=?";
     $stmt = $data->prepare($sql);
     $stmt->bind_param("siiis", $newUsername, $newClass, $newSection,  $newSalary,$newUsername);
 

@@ -126,43 +126,36 @@ include 'admin_slidebar.php';
 
 	</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $('#class').change(function(){
-                    loadSection($(this).find(':selected').val())
-                })
-              
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#class').change(function(){
+                loadSection($(this).find(':selected').val())
+            });
         });
 
         function loadClass(){
             $.ajax({
-                type:"POST",
-                url:"ajax.php",
-                data:'get=class'
+                type: "POST",
+                url: "ajax.php",
+                data: { get: 'class' }
             }).done(function(result){
-                $(result).each(function(){
-                    $('#class').append($(result));
-
-                })
+                $('#class').append(result);
             });
         }
 
         function loadSection(classId){
-            $("#section").children().remove()
+            $("#section").children().remove();
             $.ajax({
-                type:"POST",
-                url:"ajax.php",
-                data:{get:'section',classId : classId}
+                type: "POST",
+                url: "ajax.php",
+                data: { get: 'section', classId: classId }
             }).done(function(result){
-                $("#section").append($(result));
+                $("#section").append(result);
             });
-
-    
-            
         }
 
         loadClass();
-        </script>
+    </script>
 
 </body>
 </html>

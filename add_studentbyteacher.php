@@ -15,7 +15,6 @@ session_start();
     }
     
 
-
     $host="localhost";
     $user="root";
     $password="";
@@ -26,6 +25,8 @@ session_start();
         $user_email=$_POST['email'];
         $user_phone=$_POST['phone'];
         $user_password=$_POST['password'];
+        $user_class=$_POST['class'];
+        $user_section=$_POST['section'];
         $usertype="student";
 
         $check="SELECT * FROM user WHERE username='$username'";
@@ -42,9 +43,8 @@ session_start();
 
         
 
-        $sql="INSERT INTO user(
-            username,email,phone,usertype,password) VALUES('$username',' $user_email', '$user_phone',
-           '$usertype', '$user_password')";
+        $sql="INSERT INTO user(username,password,email,phone,usertype,class,section) VALUES('$username','$user_password',' $user_email', '$user_phone',
+            '$usertype','$user_class','$user_section' )";
         $result=mysqli_query($data,$sql);
         if($result)
         {
@@ -60,7 +60,6 @@ session_start();
 
     }
 ?>
-
 
 
 <!DOCTYPE html>
@@ -104,11 +103,11 @@ include 'admin_css.php';
 		
 
 			<li>
-				<a href="add_student.php">Add Student</a>
+				<a href="add_studentbyteacher.php">Add Student</a>
 			</li>
 
 			<li>
-				<a href="view_student.php">View Student</a>
+				<a href="view_studentbyteacher.php">View Student</a>
 			</li>
 
 
@@ -126,6 +125,12 @@ include 'admin_css.php';
                 <label>Username</label>
                 <input type="text" name="name">
             </div>
+
+            <div>
+                <label>password</label>
+                <input type="text" name="password">
+            </div>
+
             <div>
             <label>email</label>
                 <input type="text" name="email">
@@ -134,10 +139,14 @@ include 'admin_css.php';
                 <label>phone</label>
                 <input type="text" name="phone">
             </div>
+
             <div>
-                <label>password</label>
-                <input type="text" name="password">
+                <label>Class</label>
+                <select type="text" name="class" id=class><option>select class</option></select>
+                <label>Section</label>
+                <select type="text" name="section" id="section"><option>select sec</option></select>
             </div>
+
             <div>
                 <input type="Submit" class="btn btn-primary"name="add_student" value="Add Student">
             </div>
@@ -149,6 +158,44 @@ include 'admin_css.php';
         </form>
 
 	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#class').change(function(){
+                    loadSection($(this).find(':selected').val())
+                })
+              
+        });
+
+        function loadClass(){
+            $.ajax({
+                type:"POST",
+                url:"ajax.php",
+                data:'get=class'
+            }).done(function(result){
+                $(result).each(function(){
+                    $('#class').append($(result));
+
+                })
+            });
+        }
+
+        function loadSection(classId){
+            $("#section").children().remove()
+            $.ajax({
+                type:"POST",
+                url:"ajax.php",
+                data:{get:'section',classId : classId}
+            }).done(function(result){
+                $("#section").append($(result));
+            });
+
+    
+            
+        }
+
+        loadClass();
+        </script>
 
 </body>
 </html>
