@@ -1,53 +1,53 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['username'])) {
-    header("location:login.php");
-    exit;
-} elseif ($_SESSION['usertype'] == "student") {
-    header("location:login.php");
-    exit;
-}
-
-$host = "localhost";
-$user = "root";
-$password = "";
-$db = "schoolmanagement";
-$data = mysqli_connect($host, $user, $password, $db);
-
-if (mysqli_connect_errno()) {
-    die("Database connection failed: " . mysqli_connect_error());
-}
-
-if (isset($_POST['add_student'])) {
-    $usersections = $_POST['sections'];
-    $usertype = "student";
-
-    foreach ($usersections as $usersection) {
-        $check = "SELECT * FROM section WHERE section=?";
-        $stmt = mysqli_prepare($data, $check);
-        mysqli_stmt_bind_param($stmt, "s", $usersection);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_store_result($stmt);
-
-        if (mysqli_stmt_num_rows($stmt) > 0) {
-            echo "<script type='text/javascript'>alert('Section $usersection already exists. Try another one');</script>";
-        } else {
-            $sql = "INSERT INTO section (section) VALUES (?)";
-            $stmt_insert = mysqli_prepare($data, $sql);
-            mysqli_stmt_bind_param($stmt_insert, "s", $usersection);
-            $result = mysqli_stmt_execute($stmt_insert);
-
-            if ($result) {
-                echo "<script type='text/javascript'>alert('Data uploaded successfully');</script>";
-            } else {
-                echo "<script type='text/javascript'>alert('Upload data failed');</script>";
-            }
-            mysqli_stmt_close($stmt_insert);
-        }
-        mysqli_stmt_close($stmt);
+    if(!isset($_SESSION['username']))
+    {
+        header("location:login.php");
     }
-}
+
+    elseif($_SESSION['usertype']=="student")
+    {
+        header("location:login.php");
+    }
+
+    $host="localhost";
+    $user="root";
+    $password="";
+    $db="schoolmanagement";
+    $data = mysqli_connect($host, $user, $password, $db);
+    if(isset($_POST['add_section'])){
+        $usersection=$_POST['section'];
+       
+
+        $check="SELECT * FROM sections WHERE section='$usersection'";
+        $check_user=mysqli_query($data,$check);
+        $row_count=mysqli_num_rows($check_user);
+        if ($row_count==1)
+            {
+                echo "<script type='text/javascript'>
+                alert('user already exist. Try another one');</script>";
+            }
+        
+
+        else{
+
+        
+
+        $sql="INSERT INTO sections (section) VALUES('$usersection')";
+        $result=mysqli_query($data,$sql);
+        if($result)
+        {
+            echo "<script type='text/javascript'>
+            alert('Data uploaded success');</script>";
+        }
+        else{
+
+            echo "Upload data failed";
+
+        }
+    }
+
+    }
 ?>
 
 
@@ -87,19 +87,15 @@ if (isset($_POST['add_student'])) {
 </head>
 <body>
     <?php include 'admin_slidebar.php'; ?>
+
     <div class="container">
         <h1>Add Sections</h1>
         <form id="sectionForm" method="POST" action="">
-            <label for="sections">Select Sections:</label>
-            <select id="sections" name="sections[]" multiple>
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-                <option value="E">E</option>
-            </select>
-            <div>
-                <input type="submit" class="btn btn-primary" name="add_student" value="Add class">
+            <label for="section">Section</label>
+            <input type="text" name="section" id="section" required>
+           
+            <div style="padding-top: 2%;">
+                <input type="submit" class="btn btn-primary" name="add_section" value="Add Section">
             </div>
         </form>
     </div>

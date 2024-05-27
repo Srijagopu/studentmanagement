@@ -47,6 +47,16 @@
 				<a href="add_section.php">Add Section</a>
 			</li>
 
+			
+			<li>
+				<a href="view_section.php">View Section</a>
+			</li>
+
+			<li>
+				<a href="timetableentry.php">enter Timetable</a>
+			</li>
+			
+
 			<li>
 				<a href="view_timetable.php">View Timetable</a>
 			</li>

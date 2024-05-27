@@ -38,7 +38,7 @@ session_start();
         
 
         $sql="INSERT INTO teacher(
-            username,password,class,section,salary,usertype) VALUES('$username','$user_password',' $user_class',' $user_class', '$user_salary','$usertype'
+            username,password,class,section,salary,usertype) VALUES('$username','$user_password',' $user_class',' $user_section', '$user_salary','$usertype'
         )";
         $result=mysqli_query($data,$sql);
         if($result)

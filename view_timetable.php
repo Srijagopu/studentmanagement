@@ -1,80 +1,81 @@
+<?php
+// Database connection
+$conn = new mysqli('localhost', 'root', '', 'schoolmanagement');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT classes.class, sections.section, teacher.username, periods.period, timetable.day_of_week
+        FROM timetable
+        JOIN classes ON timetable.class_id = classes.id
+        JOIN sections ON timetable.sec_id = sections.id
+        JOIN teacher ON timetable.teacher_id = teacher.id
+        JOIN periods ON timetable.time_id = periods.id
+        ORDER BY timetable.day_of_week, periods.period";
+$result = $conn->query($sql);
+?>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>Student Dashboard</title>
-<style type="text/css">
-    label 
-    {
-        display: inline-block;
-        text-align: right;
-        width:100px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-    </style>
-
-<?php
-include 'admin_css.php';
-?>
+    <meta charset="utf-8">
+    <title>Admin Dashboard</title>
+    <?php include 'admin_css.php'; ?>
 </head>
 <body>
-<?php
-include 'admin_slidebar.php';
-?>
+    <center>
+    <?php include 'admin_slidebar.php'; ?>
+
+    <div class="content">
+		<center>
+		
+        <h1>View Teacher</h1>
+		<table border="1px">
+			<tr>
+				<th style="padding:20px; font-size:15px	;">Class</th>
+				<th style="padding:20px; font-size:15px	;">Section</th>	
+				<th style="padding:20px; font-size:15px	;">Teacher</th>	
+				<th style="padding:20px; font-size:15px	;">Period</th>	
+                <th style="padding:20px; font-size:15px	;">Day</th>
 	
+				</tr>
+				
+				<?php
 
-	<div class="content">
-        <center>
-		<h1>View TimeTable</h1>
-        <form action="" method="POST">
-            <div>
-                <label>Class</label>
-                <select type="text" name="class" id=class><option>select class</option></select><br>
-                <label>Section</label>
-                <select type="text" name="section" id="section"><option>select sec</option></select>
-            </div>
-       
-</center>
+				while($info=$result->fetch_assoc()){
 
-                
-                
-            </div>
-        </form>
+				
+				?>
+				<tr>
+					<td style="padding:20px;">
+					<?php echo"{$info['class']}";?>
+				</td>
+
+					<td style="padding:20px;">
+					<?php echo"{$info['section']}";?></td>
+
+					
+					<td style="padding:20px;">
+					<?php echo"{$info['username']}";?></td>
+
+
+					<td style="padding:20px;">
+					<?php echo"{$info['period']}";?></td>
+
+                    </td>
+
+                    <td style="padding: 20px;">
+                    <?php echo"{$info['day_of_week']}";?> </td>
+
+				
+				</tr>
+				<?php
+				}
+				?>
+		</table>
+		</center>
 
 	</div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('#class').change(function(){
-                loadSection($(this).find(':selected').val())
-            });
-        });
-
-        function loadClass(){
-            $.ajax({
-                type: "POST",
-                url: "ajax.php",
-                data: { get: 'class' }
-            }).done(function(result){
-                $('#class').append(result);
-            });
-        }
-
-        function loadSection(classId){
-            $("#section").children().remove();
-            $.ajax({
-                type: "POST",
-                url: "ajax.php",
-                data: { get: 'section', classId: classId }
-            }).done(function(result){
-                $("#section").append(result);
-            });
-        }
-
-        loadClass();
-    </script>
 
 </body>
 </html>

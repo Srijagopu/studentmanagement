@@ -9,7 +9,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$classId=isset($_POST['classId'])? $_POST['classId']:0;
+$classId=isset($_POST['section'])? $_POST['section']:0;
 $command=isset($_POST['get'])? $_POST['get']: "";
 
 switch($command){
@@ -23,7 +23,7 @@ switch($command){
 
         case "section":
             $result1="<option>Select Section</option>";
-            $statement="SELECT id,section FROM sections WHERE class_id=" . $classId;
+            $statement="SELECT id,section FROM sections WHERE section=" . $classId;
             $dt=mysqli_query($conn,$statement);
             while ($result=mysqli_fetch_array($dt)){
                  $result1 .="<option value=" . $result['id'].">".$result['section']."</option>";
