@@ -57,6 +57,10 @@ session_start();
             <li>
 				<a href="view_mystudent.php">View my Students</a>
 			</li>
+			
+			<li>
+				<a href="teacher_timetable.php">View Timetable</a>
+			</li>
 
 
 		</ul>

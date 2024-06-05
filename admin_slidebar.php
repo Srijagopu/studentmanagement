@@ -19,6 +19,11 @@
 				<a href="admission.php">Admission</a>
 			</li>
 
+			
+			<li>
+				<a href="import.php">Import or Export</a>
+			</li>
+
 			<li>
 				<a href="add_student.php">Add Student</a>
 			</li>
